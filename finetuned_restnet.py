@@ -26,20 +26,19 @@ optimizer = optim.SGD(resnet18.parameters(), lr=0.001, momentum=0.9)
 
 # Version 1.0: Train the model
 def train_model(model, criterion, optimizer, dataloader, num_epochs=5):
-        model.train()
-            for epoch in range(num_epochs):
-                        running_loss = 0.0
-                                for i, data in enumerate(dataloader, 0):
-                                                inputs, labels = data
-                                                            optimizer.zero_grad()
-                                                                        outputs = model(inputs)
-                                                                                    loss = criterion(outputs, labels)
-                                                                                                loss.backward()
-                                                                                                            optimizer.step()
-                                                                                                                        running_loss += loss.item()
-                                                                                                                                print(f"Epoch {epoch+1}, Loss: {running_loss/len(trainloader)}")
+    model.train()
+    for epoch in range(num_epochs):
+        running_loss = 0.0
+        for i, data in enumerate(dataloader, 0):
+            inputs, labels = data
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
+            running_loss += loss.item()
+            print(f"Epoch {epoch+1}, Loss: {running_loss/len(trainloader)}")
 
-                                                                                                                                train_model(resnet18, criterion, optimizer, trainloader)
-
-                                                                                                                                # Save the model
-                                                                                                                                torch.save(resnet18.state_dict(), 'resnet18_fashionmnist_v1.pth')
+train_model(resnet18, criterion, optimizer, trainloader)
+# Save the model
+torch.save(resnet18.state_dict(), 'resnet18_fashionmnist_v1.pth')
